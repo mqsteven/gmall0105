@@ -1,6 +1,6 @@
 package com.atguigu.gmall.user.service;
 
-import com.atguigu.gmall.user.bean.UmsMember;
+import com.atguigu.gmall.user.common.bean.UmsMember;
 
 
 import java.util.List;

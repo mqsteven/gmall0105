@@ -1,34 +1,46 @@
 package com.atguigu.gmall.user.controller;
 
-import com.atguigu.gmall.user.bean.UmsMember;
-import com.atguigu.gmall.user.bean.UmsMemberReceiveAddress;
-import com.atguigu.gmall.user.service.UserAddressService;
+import com.atguigu.gmall.user.common.bean.UmsMember;
+import com.atguigu.gmall.user.common.enums.ResponseEnum;
 import com.atguigu.gmall.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
-@ResponseBody
+@RestController
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    UserAddressService userAddressService;
+
     @RequestMapping("getAllUser")
     public List<UmsMember> getAllUser(){
         List<UmsMember> umsMembers= userService.getAllUser();
         return umsMembers;
     }
+    @GetMapping("addUser")
+    public String addUser(){
+        UmsMember user=UmsMember.builder()
+                .id("11").city("上海").gender(0).build();
+        int i=0;
+        try {
+            i = userService.addUser(user);
+        }catch (Exception e){
+            return ResponseEnum.ERROR_ERROR.toString();
+        }
 
-    @RequestMapping("getAllAddress")
-    public List<UmsMemberReceiveAddress> getAddress(){
-        List<UmsMemberReceiveAddress> allAddress = userAddressService.getAllAddress();
-    return allAddress;
+         if(i==1){
+
+             return ResponseEnum.SUCCESS.toString();
+         }else{
+             return ResponseEnum.ERROR.toString();
+         }
     }
+
+
 
     @RequestMapping("index")
     @ResponseBody
